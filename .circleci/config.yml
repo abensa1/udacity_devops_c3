@@ -39,8 +39,9 @@ jobs:
             ansible-playbook -i inventory.txt main.yml
   rollback_test:
     docker:
-      - image: alpine:latest
+      - image: amazon/aws-cli
     steps:
+      - checkout
       - run:
           name: simultate rollback
           command:  |
