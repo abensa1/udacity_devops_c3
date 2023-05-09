@@ -45,7 +45,6 @@ jobs:
           name: simultate rollback
           command:  return 1
       - destroy_environment
-        when: on_fail  
   smoke_test:
     docker:
       - image: alpine:latest
