@@ -65,4 +65,7 @@ workflows:
   myWorkflow:
     jobs:
       - create_infrastructure
-      - rollback_test
+      - rollback_test:
+          requires:
+            - create_infrastructure
+
