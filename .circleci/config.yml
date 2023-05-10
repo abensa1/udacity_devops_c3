@@ -68,9 +68,9 @@ jobs:
       - image: amazon/aws-cli
     steps:
       - run:
-        name: Create S3 Bucket
-        command: |
-            aws cloudformation deploy \
+          name: Create S3 Bucket
+          command: |
+              aws cloudformation deploy \
               --template-file CloudFormation/bucket.yml \
               --stack-name create-bucket-${CIRCLE_WORKFLOW_ID:0:7} \
               --parameter-overrides MyBucketName="new-devops-ab-bucket-${CIRCLE_WORKFLOW_ID:0:7}"
@@ -82,11 +82,11 @@ jobs:
       - checkout
       - run: yum install -y tar gzip
       - run:
-        name: Get and Save old Pipeline ID
-        command: |
-          aws cloudformation \
-          list-exports --query "Exports[?Name==\`PipelineID\`].Value" \
-          --no-paginate --output text > ~/textfile.txt
+          name: Get and Save old Pipeline ID
+          command: |
+            aws cloudformation \
+            list-exports --query "Exports[?Name==\`PipelineID\`].Value" \
+            --no-paginate --output text > ~/textfile.txt
       - persist_to_workspace:
           root: ~/
           paths:
@@ -97,12 +97,12 @@ jobs:
     steps:
       - checkout
       - run:
-        name: Execute cloudfront yml
-        command: |
-          aws cloudformation deploy \
-          --template-file cloudfront.yml \
-          --stack-name production-distro \
-          --parameter-overrides PipelineID="new-devops-ab-bucket-${CIRCLE_WORKFLOW_ID:0:7}"
+          name: Execute cloudfront yml
+          command: |
+            aws cloudformation deploy \
+            --template-file cloudfront.yml \
+            --stack-name production-distro \
+            --parameter-overrides PipelineID="new-devops-ab-bucket-${CIRCLE_WORKFLOW_ID:0:7}"
   clean_up_old_front_end:
     docker:
       - image: amazon/aws-cli
@@ -110,12 +110,12 @@ jobs:
       - checkout
       - run: yum install -y tar gzip
       - attach_workspace:
-        at: ~/
+          at: ~/
       - run:
-        name: Destroy the previous S3 bucket and Cloudformation stack
-        command: |
-          export OldBucketID=$(cat ~/textfile.txt)
-          aws s3 rm "s3://${OldBucketID}" --recursive
+          name: Destroy the previous S3 bucket and Cloudformation stack
+          command: |
+            export OldBucketID=$(cat ~/textfile.txt)
+            aws s3 rm "s3://${OldBucketID}" --recursive
 workflows:
   myWorkflow:
     jobs:
