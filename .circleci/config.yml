@@ -67,6 +67,7 @@ jobs:
     docker:
       - image: amazon/aws-cli
     steps:
+      - checkout
       - run:
           name: Create S3 Bucket
           command: |
