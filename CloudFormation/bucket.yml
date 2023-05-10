@@ -12,8 +12,8 @@ Resources:
       PublicAccessBlockConfiguration:
         BlockPublicPolicy: false
       WebsiteConfiguration:
-        IndexDocument: CloudFormation/index.html
-        ErrorDocument: CloudFormation/error.html
+        IndexDocument: index.html
+        ErrorDocument: error.html
   WebsiteBucketPolicy:
     Type: AWS::S3::BucketPolicy
     Properties:
