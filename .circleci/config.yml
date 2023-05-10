@@ -114,8 +114,9 @@ jobs:
       - run:
           name: Destroy the previous S3 bucket and Cloudformation stack
           command: |
-            export OldBucketID=$(cat ~/textfile.txt)
-            echo $OldBucketID
+            export OldBucketID= aws cloudformation \
+            list-exports --query "Exports[?Name==\`PipelineID\`].Value" \
+            --no-paginate --output text > ~/textfile.txt
             aws s3 rb s3://${OldBucketID} --force
             aws cloudformation delete-stack --stack-name create-bucket-${CIRCLE_WORKFLOW_ID:0:7}
 workflows:
