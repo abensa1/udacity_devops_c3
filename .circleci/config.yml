@@ -75,7 +75,6 @@ jobs:
               --template-file CloudFormation/bucket.yml \
               --stack-name create-bucket-${CIRCLE_WORKFLOW_ID:0:7} \
               --parameter-overrides BucketName="new-devops-ab-bucket-${CIRCLE_WORKFLOW_ID:0:7}"
-              --region eu-west-2
   get_last_deployment_id:
     docker:
       - image: amazon/aws-cli
