@@ -11,7 +11,6 @@ Resources:
       BucketName: !Sub "${BucketName}"
       PublicAccessBlockConfiguration:
         BlockPublicPolicy: false
-      #AccessControl: PublicRead
       WebsiteConfiguration:
         IndexDocument: CloudFormation/index.html
         ErrorDocument: CloudFormation/error.html
@@ -21,8 +20,8 @@ Resources:
       Bucket: !Ref 'WebsiteBucket'
       PolicyDocument:
         Statement:
-        - Sid: PublicReadForGetBucketObjects
-          Effect: Allow
-          Principal: '*'
-          Action: s3:GetObject
-          Resource: !Join ['', ['arn:aws:s3:::', !Ref 'WebsiteBucket', /*]]
+          - Sid: PublicReadForGetBucketObjects
+            Effect: Allow
+            Principal: '*'
+            Action: s3:GetObject
+            Resource: !Join ['', ['arn:aws:s3:::', !Ref 'WebsiteBucket', /*]]
