@@ -100,7 +100,7 @@ jobs:
           name: Execute cloudfront yml
           command: |
             aws cloudformation deploy \
-            --template-file cloudfront.yml \
+            --template-file CloudFormation/template.yml \
             --stack-name production-distro \
             --parameter-overrides PipelineID="new-devops-ab-bucket-${CIRCLE_WORKFLOW_ID:0:7}"
   clean_up_old_front_end:
